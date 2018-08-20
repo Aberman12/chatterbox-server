@@ -1,0 +1,34 @@
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #1F363D;
+}
+.card-title {
+    color: #40798C;
+}
+.card {
+  background:  #70A9A1;
+  padding: 1%;
+  margin: 0 30%;
+  margin-top: 2px;
+}
+.message-box .card-title {
+  text-align: center;
+} 
+.feed {
+  text-align: left;
+  color: #1F363D;
+  padding: 6%;
+  border: black;
+}
+
+.username {
+  color: #40798C;
+  font-weight: normal;
+}
+
+.btn-primary {
+  color: white;
+}
+/* 
+#line {
+} */
