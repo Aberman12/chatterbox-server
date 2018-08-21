@@ -48,7 +48,45 @@ module.exports = requestHandler = function(request, response) {
   
   let postResults = [];
   let getResults = [];
-  let storage = {};
+  let finalResults = [];
+  let storage = {
+    'results': []
+  };
+
+  // if (request.url === '/classes/messages') {
+  //   if (request.method === 'POST') {
+  //     request.on('data', (chunk) => {
+  //       console.log('chunk', chunk);
+  //       postResults.push(chunk);    
+  //     }).on('end', () => {      
+  //       postResults = Buffer.concat(postResults).toString();
+  //       console.log('postResults', postResults);
+  //       var parsedResults = JSON.parse(postResults);
+  //       console.log('parsedResults', parsedResults);
+  //       finalResults.push(JSON.stringify(parsedResults));
+  //       console.log('finalResults', finalResults);
+  //       storage.results = finalResults;
+  //       console.log('storage.results', storage.results);
+  //       response.writeHead(201, headers);
+  //       console.log('storage', storage);
+  //       response.end(storage);      
+  //     });
+  //   } else if (request.method === 'GET') {
+  //       request.on('data', (messages) => {
+  //         getResults.push(messages);
+  //         // console.log('69', messages);
+  //       }).on('end', () => {
+  //         getResults = Buffer.concat(getResults).toString();
+  //         response.writeHead(200, headers);      
+  //         // console.log('END GET', getResults);
+  //         response.end();
+  //       });
+  //     } else  {
+  //       response.writeHead(404, {'Content-Type': 'text/plain'});      
+  //   }
+  // } else {
+  //   response.writeHead(404, {'Content-Type': 'text/plain'});      
+  // }
 
   if (request.method === 'POST' && request.url === '/classes/messages') {
     request.on('data', (chunk) => {
@@ -60,19 +98,16 @@ module.exports = requestHandler = function(request, response) {
       response.writeHead(201, headers);
       console.log('end of post', postResults);
       response.end(JSON.stringify(storage.results = [postResults]));
+  
     });
   }
   
-  if (request.method === 'GET' && request.url === '/classes/messages') {
-    request.on('data', (messages) => {
-      getResults.push(messages);
-      console.log('69', messages);
-    }).on('end', () => {
-      getResults = Buffer.concat(getResults).toString();
+
+  if (request.method === 'GET' && request.url === '/classes/messages') { 
+    console.log(' first test', request.data, request.method, request.url) 
       response.writeHead(200, headers);      
       console.log('END GET', getResults);
-      response.end(JSON.stringify({'results': [getResults]}));
-    });
+      response.end(storage);
   }
 
   request.on('error', (err) => {
@@ -103,4 +138,3 @@ var defaultCorsHeaders = {
   'access-control-allow-headers': 'content-type, accept',
   'access-control-max-age': 10 // Seconds.
 };
-
