@@ -28,13 +28,14 @@ module.exports = requestHandler = function(request, response) {
   // debugging help, but you should always be careful about leaving stray
   // console.logs in your code.
   console.log('Serving request type ' + request.method + ' for url ' + request.url);
-
   // The outgoing status.
   var statusCode = 200;
 
   // See the note below about CORS headers.
   var headers = defaultCorsHeaders;
-
+  var results = {
+    results: []
+  };
   // Tell the client we are sending them plain text.
   //
   // You will need to change this if you are sending something
@@ -44,6 +45,39 @@ module.exports = requestHandler = function(request, response) {
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
   response.writeHead(statusCode, headers);
+  
+  let postResults = [];
+  let getResults = [];
+  let storage = {};
+
+  if (request.method === 'POST' && request.url === '/classes/messages') {
+    request.on('data', (chunk) => {
+      postResults.push(chunk);
+    }).on('end', () => {      
+      postResults = Buffer.concat(postResults).toString();
+      var parsedResults = JSON.parse(postResults);
+      postResults = parsedResults;
+      response.writeHead(201, headers);
+      console.log('end of post', postResults);
+      response.end(JSON.stringify(storage.results = [postResults]));
+    });
+  }
+  
+  if (request.method === 'GET' && request.url === '/classes/messages') {
+    request.on('data', (messages) => {
+      getResults.push(messages);
+      console.log('69', messages);
+    }).on('end', () => {
+      getResults = Buffer.concat(getResults).toString();
+      response.writeHead(200, headers);      
+      console.log('END GET', getResults);
+      response.end(JSON.stringify({'results': [getResults]}));
+    });
+  }
+
+  request.on('error', (err) => {
+    console.error('error');
+  });
 
   // Make sure to always call response.end() - Node may not send
   // anything back to the client until you do. The string you pass to
@@ -52,7 +86,6 @@ module.exports = requestHandler = function(request, response) {
   //
   // Calling .end "flushes" the response's internal buffer, forcing
   // node to actually send all the data over to the client.
-  response.end('Hello, World!');
 };
 
 // These headers will allow Cross-Origin Resource Sharing (CORS).

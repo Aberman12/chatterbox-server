@@ -3,14 +3,10 @@
   <head>
     <meta charset="utf-8">
     <title>chatterbox</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="styles/styles.css">
 
     <!-- dependencies -->
     <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>    <script src="bower_components/underscore/underscore.js"></script>
-    <script src="bower_components/backbone/backbone.js"></script>
     <script>
       // YOU DO NOT NEED TO EDIT THIS CODE
       if (!/(&|\?)username=/.test(window.location.search)) {
@@ -23,49 +19,29 @@
       }
     </script>
     <!-- your scripts -->
-    <script src="env/client:env:config.js"></script>
+    <script src="env/config.js"></script>
     <script src="scripts/app.js"></script>
-
   </head>
   <body>
-    <!-- HEADER -->
-    <div class="card header-card">
-      <div class="card-body">
-        <h2 class="card-title">chatterbox</h2>
-        <!-- DROPDOWN MENU -->
-        <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Select A Room
-            </button>
-            <div class="dropdown-menu aria-labelledby=dropdownMenuButton">
-              <a class="dropdown-item hrla24" href="#">HRLA24</a>
-              <a class="dropdown-item random" href="#">Random</a>
-              <a class="dropdown-item code-talk" href="#">Code Talk</a>
-              <a class="dropdown-item jokes" href="#">Jokes</a>
-              <a class="dropdown-item lobby" href="#">Lobby</a>
-            </div>
-          </div>
+    <div id="main">
+      <h1>chatterbox</h1>
+      <!-- Your HTML goes here! -->
+
+      <div class="spinner"><img src="images/spiffygif_46x46.gif"></div>
+      <div id="rooms">
+        Room:
+        <select id="roomSelect">
+        </select>
       </div>
-      <!-- INPUT -->
-      <div class="input-group mb-3">
-          <div class="input-group-prepend">
-            <span class="input-group-text" id="inputGroup-sizing-default">Enter your message</span>
-          </div>
-          <input type="text" class="form-control" id="input-box" aria-label="Default" aria-describedby="inputGroup-sizing-default">
-        </div>
-    <!-- BUTTON -->
-    <a href="" class="btn btn-secondary" id="submit-button">Send Message</a>
-  </div>
-</div>
-    </div>
-    <!-- MESSAGES -->
-    <div class="card text-right message-box">
-      <div class="card-body">
-        <h5 class="card-title">Messages</h5>
-        <hr id="line"></hr>
-          <div class="feed container"></div>
-          <!-- <script></script> -->
-      </div>
-    </div>
-  </body>
+      <form action="#" id="send" method="post">
+        <input type="text" name="message" id="message"/>
+        <input type="submit" name="submit" class="submit"/>
+      </form>    </div>
+    <div id="chats"></div>
+
+    <script>
+      $(function(){
+        app.init()
+      });
+    </script>  </body>
 </html>
